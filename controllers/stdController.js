@@ -1,37 +1,7 @@
-const cl = console.log;
+const student = require("../data/std.js")
 
-let std = [
-    {
-        "id": "1",
-        "fname": "Pratiksha",
-        "lname": "Kanje",
-        "email": "pratikshakanje@gmail.com",
-        "contact": "9878563789"
-    },
-    {
-        "id": "2",
-        "fname": "Chetan",
-        "lname": "Kanje",
-        "email": "chetankanje@gmail.com",
-        "contact": "84525989767"
-    },
-    {
-        "id": "3",
-        "fname": "Akanksha",
-        "lname": "Kanje",
-        "email": "akankshakanje@gmail.com",
-        "contact": "9854376869"
-    }
-]  
-
-const express = require("express");
-
-const app = express();
-
-app.use(express.json())
-
-//get all post
-app.get("/api/std", (req, res) => {
+//fetch all data
+const sendStd = (req, res) => {
     try{
         res.status(200).json({
             success: true,
@@ -46,10 +16,11 @@ app.get("/api/std", (req, res) => {
             error: err.message
         })
     }
-})
+}
 
-//get single post
-app.get("/api/std/:id", (req, res) => {
+
+//fetch single data
+const sendStdById = (req, res) => {
     try{
         const id = req.params.id;
 
@@ -75,10 +46,10 @@ app.get("/api/std/:id", (req, res) => {
             error: err.message
         })
     }
-})
+}
 
 //create
-app.post("/api/std", (req, res) =>{
+const createStd = (req, res) =>{
     try{
         let newStd = {
             id: Date.now().toString(),
@@ -103,10 +74,10 @@ app.post("/api/std", (req, res) =>{
             error: err.message
         })
     }
-})
+}
 
 //update
-app.patch("/api/std/:id", (req, res) =>{
+const updateStd = (req, res) =>{
     try{
         let student = std.find(s => s.id == req.params.id);
 
@@ -135,10 +106,10 @@ app.patch("/api/std/:id", (req, res) =>{
             error: err.message
         })
     }
-})
+}
 
 //delete
-app.delete("/api/std/:id", (req, res) => {
+const deleteStd = (req, res) => {
     try{
         let getInd = std.findIndex(s => s.id == req.params.id);
 
@@ -164,14 +135,12 @@ app.delete("/api/std/:id", (req, res) => {
             error: err.message
         })
     }
-})
+}
 
-
-app.listen(3000, () => {
-    cl("Student data fetched successfully")
-})
-
-
-
-
-
+module.exports = {
+    sendStd,
+    sendStdById,
+    createStd,
+    updateStd,
+    deleteStd
+}
