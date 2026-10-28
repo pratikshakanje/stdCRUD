@@ -5,7 +5,7 @@ const sendStd = (req, res) => {
     try{
         res.status(200).json({
             success: true,
-            body: std,
+            body: student,
             message: "Student fetched successfully"
         })
     }
@@ -24,9 +24,9 @@ const sendStdById = (req, res) => {
     try{
         const id = req.params.id;
 
-        const student = std.find(s => s.id === id);
+        const getStd = student.find(s => s.id === id);
 
-        if(!student){
+        if(!getStd){
             return res.status(404).json({
                 success: false,
                 message: "Student not found"
@@ -35,7 +35,7 @@ const sendStdById = (req, res) => {
 
         res.status(200).json({
             success: true,
-            body: student,
+            body: getStd,
             message: "Student fetched successfully"
         })
     }
@@ -59,7 +59,7 @@ const createStd = (req, res) =>{
             contact: req.body.contact,
         }
 
-        std.push(newStd)
+        student.push(newStd)
 
         res.status(201).json({
             success: true,
@@ -79,23 +79,24 @@ const createStd = (req, res) =>{
 //update
 const updateStd = (req, res) =>{
     try{
-        let student = std.find(s => s.id == req.params.id);
+        let studentData = student.find(s => s.id === req.params.id);
 
-        if(!student){
+        if(!studentData){
             return res.status(404).json({
                 success: false,
+                body: studentData,
                 message: "Student not found"
             })
         }
 
-        student.fname = req.body.fname;
-        student.lname = req.body.lname;
-        student.email = req.body.email;
-        student.contact = req.body.contact;
+        studentData.fname = req.body.fname;
+        studentData.lname = req.body.lname;
+        studentData.email = req.body.email;
+        studentData.contact = req.body.contact;
 
         res.status(200).json({
             success: true,
-            body: student,
+            body: studentData,
             message: "Student updated successfully",
         })
     }
@@ -111,7 +112,7 @@ const updateStd = (req, res) =>{
 //delete
 const deleteStd = (req, res) => {
     try{
-        let getInd = std.findIndex(s => s.id == req.params.id);
+        let getInd = student.findIndex(s => s.id === req.params.id);
 
         if(getInd === -1){
             return res.status(404).json({
@@ -120,7 +121,7 @@ const deleteStd = (req, res) => {
             })
         }
 
-        let deleteStd = std.splice(getInd, 1);
+        let deleteStd = student.splice(getInd, 1);
 
         res.status(200).json({
             success: true,
